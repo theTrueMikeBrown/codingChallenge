@@ -46,7 +46,7 @@ export class Home extends Component {
 
     return (
       <div>
-        <h2>Employees</h2>
+        <h1>Employees</h1>
         {contents}
       </div>
     );
