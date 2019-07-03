@@ -10,7 +10,8 @@ namespace employee_website.Controllers
     public class EmployeesController : Controller
     {
         public List<Employee> TempEmployees { get; set; } = new List<Employee> {
-            new Employee{ Name = "Primus" }
+            new Employee{ Name = "Primus", Id="1" },
+            new Employee{ Name = "Segundus", Id="2" }
         };
 
         [HttpGet()]
