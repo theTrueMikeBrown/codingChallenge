@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Formik } from 'formik';
+import { Formik, Field, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import './AddEmployee.css';
 
@@ -8,6 +8,13 @@ export class AddEmployee extends Component {
 
   constructor(props) {
     super(props);
+
+    this.previewCosts = this.previewCosts.bind(this);
+  }
+
+  previewCosts(){ 
+    debugger;
+    alert("TODO");
   }
 
   render() {
@@ -17,7 +24,7 @@ export class AddEmployee extends Component {
         <p>Enter data about the employee here.</p>
 
         <Formik
-          initialValues={{ name: '' }}
+          initialValues={{ name: '', dependents: [] }}
           onSubmit={(values, { setSubmitting }) => {
             //TODO:
           }}
@@ -37,9 +44,10 @@ export class AddEmployee extends Component {
               handleSubmit,
               handleReset,
             } = props;
+
             return (
               <form onSubmit={handleSubmit}>
-                <label htmlFor="name" style={{ display: 'block' }}>
+                <label htmlFor="name">
                   Name
                 </label>
                 <input
@@ -57,11 +65,37 @@ export class AddEmployee extends Component {
                   <div className="input-feedback">{errors.name}</div>
                 )}
 
+                <fieldset style={{ margin: '1em' }}>
+                  <legend>Dependents:</legend>
+                  <FieldArray
+                    name="dependents"
+                    render={arrayHelpers => (
+                      <div>
+                        {values.dependents && values.dependents.length > 0 ? (
+                          values.dependents.map((dependent) => (
+                            <div key={dependent.id}>
+                              <Field name={`dependents.${dependent.id}.name`} placeholder="dependent name" />
+                            </div>
+                          ))
+                        ) : ""}
+                        <button type="button" onClick={() => arrayHelpers.push({ name: '', id: values.dependents.length })}>
+                          Add a dependent
+                        </button>
+                      </div>
+                    )}
+                  />
+                </fieldset>
+
                 <button
                   type="button"
                   onClick={handleReset}
                   disabled={!dirty || isSubmitting}>
                   Reset
+                </button>
+                <button type="button"
+                  onClick={this.previewCosts}
+                  disabled={isSubmitting}>
+                  Preview benefits costs
                 </button>
                 <button type="submit" disabled={isSubmitting}>
                   Submit

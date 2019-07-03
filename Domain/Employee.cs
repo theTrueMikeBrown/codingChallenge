@@ -6,6 +6,6 @@ namespace employee_website.Domain
     {
         public string Name { get; set; }
         public string Id { get; set; }
-        public IEnumerable<Dependant> Dependants {get; set; }
+        public IEnumerable<Dependent> Dependents {get; set; }
     }
 }
